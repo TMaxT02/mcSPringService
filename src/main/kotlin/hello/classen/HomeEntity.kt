@@ -1,4 +1,4 @@
-package gg.flyte.template.classes
+package hello.classen
 
 
 import jakarta.persistence.*

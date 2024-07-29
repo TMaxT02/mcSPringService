@@ -1,10 +1,10 @@
 plugins {
-  kotlin("jvm") version "2.0.20-Beta2"
-
-  id("org.springframework.boot") version "3.2.2"
-  id("io.spring.dependency-management") version "1.1.4"
-  kotlin("plugin.spring") version "1.9.22"
-  kotlin("plugin.jpa") version "1.9.22"
+  val kotlinVersion = "1.8.0"
+  id("org.springframework.boot") version "3.0.1"
+  id("io.spring.dependency-management") version "1.1.0"
+  kotlin("jvm") version kotlinVersion
+  kotlin("plugin.spring") version kotlinVersion
+  kotlin("plugin.jpa") version kotlinVersion
 }
 
 group = "mc.plugin"
@@ -15,16 +15,13 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-  implementation("mysql:mysql-connector-java:8.0.33")
-  implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-  implementation("org.springframework.boot:spring-boot-starter-mustache")
   implementation("org.springframework.boot:spring-boot-starter-web")
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+  implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
-  runtimeOnly("com.h2database:h2")
-  runtimeOnly("org.springframework.boot:spring-boot-devtools")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+  implementation("com.h2database:h2")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
+  implementation("mysql:mysql-connector-java:8.0.33")
 }
 
 val targetJavaVersion = 17

@@ -1,4 +1,4 @@
-package gg.flyte.template.classes
+package hello.classen
 
 enum class Symbol(val symbole: String) {
     Owner("我 "),

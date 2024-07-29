@@ -1,6 +1,7 @@
-package gg.flyte.template.repo
+package hello.logic
 
-import gg.flyte.template.classes.McPlayerEntity
+import hello.reposotorys.McPlayerRepository
+import hello.classen.McPlayerEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
