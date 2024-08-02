@@ -1,9 +1,8 @@
 package hello.reposotorys
 
-import hello.classen.entity.McPlayerEntity
+import hello.classen.entity.BuildRealmAllowedEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface McPlayerRepository : JpaRepository<McPlayerEntity, String> {
-}
+interface BuildRealmAllowedRepository : JpaRepository<BuildRealmAllowedEntity, Long>

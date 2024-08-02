@@ -1,74 +1,58 @@
-package hello.controllers
+package hello.controller
 
-
-import hello.classen.McPlayerEntity
+import hello.classen.dto.McPlayerDTO
+import hello.classen.entity.McPlayerEntity
 import hello.logic.McPlayerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-
 
 @RestController
 @RequestMapping("/players")
-class TestController @Autowired constructor(
-  private val mcPlayerService: McPlayerService
+class McPlayerController(
+  @Autowired private val mcPlayerService: McPlayerService
 ) {
 
-  @GetMapping("/test/{variable}")
-  fun test(@PathVariable variable: String): ResponseEntity<Any> {
-    val x = "81a45dc0-57ad-43e9-972b-42d39f852d0f"
-    val player = mcPlayerService.getMcPlayerById(x)
-    val responseMessage = player?.rang ?: "Player not found"
-    return ResponseEntity(responseMessage, HttpStatus.OK)
-  }
-
-  @PostMapping
-  fun createPlayer(@RequestBody player: McPlayerEntity): ResponseEntity<McPlayerEntity> {
-    val createdPlayer = mcPlayerService.saveMcPlayer(player)
-    return ResponseEntity(createdPlayer, HttpStatus.CREATED)
-  }
-
   @GetMapping("/{uuid}")
-  fun getPlayerById(@PathVariable uuid: String): ResponseEntity<McPlayerEntity> {
-    val player = mcPlayerService.getMcPlayerById(uuid)
+  fun getPlayer(@PathVariable uuid: String): ResponseEntity<McPlayerDTO> {
+    val player = mcPlayerService.getMcPlayer(uuid)
     return if (player != null) {
-      ResponseEntity(player, HttpStatus.OK)
+      ResponseEntity.ok(player)
     } else {
-      ResponseEntity(HttpStatus.NOT_FOUND)
+      ResponseEntity.notFound().build()
     }
   }
 
+  @PostMapping
+  fun createPlayer(@RequestBody dto: McPlayerDTO): ResponseEntity<McPlayerDTO> {
+    val playerEntity = McPlayerEntity(
+      uuid = dto.uuid,
+      rang = dto.rang,
+      geld = dto.geld
+    )
+    val createdPlayer = mcPlayerService.saveMcPlayer(playerEntity)
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdPlayer.toDTO())
+  }
+
   @PutMapping("/{uuid}")
-  fun updatePlayer(
-    @PathVariable uuid: String,
-    @RequestBody updatedPlayer: McPlayerEntity
-  ): ResponseEntity<McPlayerEntity> {
-    val existingPlayer = mcPlayerService.getMcPlayerById(uuid)
-    return if (existingPlayer != null) {
-      val player = existingPlayer.copy(
-        rang = updatedPlayer.rang,
-        geld = updatedPlayer.geld,
-        homes = updatedPlayer.homes,
-        buildRealmAllowedList = updatedPlayer.buildRealmAllowedList
-      )
-      val savedPlayer = mcPlayerService.saveMcPlayer(player)
-      ResponseEntity(savedPlayer, HttpStatus.OK)
+  fun updatePlayer(@PathVariable uuid: String, @RequestBody dto: McPlayerDTO): ResponseEntity<McPlayerDTO> {
+    val playerEntity = McPlayerEntity(
+      uuid = dto.uuid,
+      rang = dto.rang,
+      geld = dto.geld
+    )
+    val updatedPlayer = mcPlayerService.updateMcPlayer(uuid, playerEntity)
+    return if (updatedPlayer != null) {
+      ResponseEntity.ok(updatedPlayer)
     } else {
-      ResponseEntity(HttpStatus.NOT_FOUND)
+      ResponseEntity.notFound().build()
     }
   }
 
   @DeleteMapping("/{uuid}")
   fun deletePlayer(@PathVariable uuid: String): ResponseEntity<Void> {
-    val existingPlayer = mcPlayerService.getMcPlayerById(uuid)
-    return if (existingPlayer != null) {
-      mcPlayerService.deleteMcPlayer(uuid)
-      ResponseEntity<Void>(HttpStatus.NO_CONTENT)
-    } else {
-      ResponseEntity(HttpStatus.NOT_FOUND)
-    }
+    mcPlayerService.deleteMcPlayer(uuid)
+    return ResponseEntity.noContent().build()
   }
 }
