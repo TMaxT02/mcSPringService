@@ -12,7 +12,7 @@ import jakarta.persistence.EnumType.STRING
 data class McPlayerEntity(
   @Id
   @Column(name = "uuid", nullable = false)
-  var uuid: String,
+  var playerUUID: String,
 
   @Enumerated(STRING)
   @Column(name = "rang", nullable = false)
@@ -23,7 +23,7 @@ data class McPlayerEntity(
 ) {
   fun toDTO(homes: List<HomeDTO>?=null, buildRealmAllowedList: List<BuildRealmAllowedDTO>?=null): McPlayerDTO {
     return McPlayerDTO(
-      uuid = this.uuid,
+      playerUUID = this.playerUUID,
       rang = this.rang,
       geld = this.geld,
       homes = homes,

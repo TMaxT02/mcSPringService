@@ -1,6 +1,7 @@
 package hello.logic
 
 import hello.classen.dto.BuildRealmAllowedDTO
+import hello.classen.dto.HomeDTO
 import hello.classen.entity.BuildRealmAllowedEntity
 import hello.reposotorys.BuildRealmAllowedRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,10 +12,16 @@ class BuildRealmAllowedService(
   @Autowired private val buildRealmAllowedRepository: BuildRealmAllowedRepository
 ) {
 
+
   fun createBuildRealmAllowed(dto: BuildRealmAllowedDTO): BuildRealmAllowedDTO {
-    val buildRealmAllowed = dto.toEntity()
-    buildRealmAllowedRepository.save(buildRealmAllowed)
-    return buildRealmAllowed.toDTO()
+    println("Creating home with DTO: $dto")
+
+    val home = dto.toEntity()
+    println("Converted to entity: $home")
+
+    val buildRelam = buildRealmAllowedRepository.save(home)
+
+    return buildRelam.toDTO()
   }
 
   fun getBuildRealmAllowed(id: Long): BuildRealmAllowedDTO? {
@@ -23,8 +30,8 @@ class BuildRealmAllowedService(
 
   fun updateBuildRealmAllowed(id: Long, dto: BuildRealmAllowedDTO): BuildRealmAllowedDTO? {
     val buildRealmAllowed = buildRealmAllowedRepository.findById(id).orElse(null) ?: return null
-    buildRealmAllowed.ownerUUID = dto.ownerUUID
-    buildRealmAllowed.otherPlayerUUID = dto.otherPlayerUUID
+    buildRealmAllowed.playerUUID = dto.playerUUID
+   //buildRealmAllowed.otherPlayerUUID = dto.otherPlayerUUID
     buildRealmAllowedRepository.save(buildRealmAllowed)
     return buildRealmAllowed.toDTO()
   }

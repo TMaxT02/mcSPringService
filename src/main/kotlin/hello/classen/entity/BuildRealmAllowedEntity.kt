@@ -8,20 +8,20 @@ import jakarta.persistence.*
 data class BuildRealmAllowedEntity(
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", updatable = false, nullable = false)
-  val id: Long? = null,
+  @Column(name = "id")
+  val buildRealmAllowedID: Int,
 
-  @Column(name = "ownerUUID", nullable = false)
-  var ownerUUID: String,
+  @Column(name = "ownerUUID")
+  var playerUUID: String,
 
-  @Column(name = "otherPlayerUUID", nullable = false)
-  var otherPlayerUUID: String
+  @Column(name = "otherPlayerUUID")
+  var otherPlayerUUID: String,
 ) {
   fun toDTO(): BuildRealmAllowedDTO {
     return BuildRealmAllowedDTO(
-      id = (this.id ?: throw IllegalStateException("ID should not be null")),
-      ownerUUID = this.ownerUUID,
-      otherPlayerUUID = this.otherPlayerUUID
+buildRealmAllowedID = buildRealmAllowedID,
+      playerUUID = playerUUID,
+      otherPlayerUUID = otherPlayerUUID
     )
   }
 }

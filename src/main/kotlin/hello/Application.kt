@@ -13,8 +13,8 @@ class Application(private val mcPlayerService: McPlayerService) {
 
 	@PostConstruct
 	fun init() {
-    var x = "81a45dc0-57ad-43e9-972b-42d39f852d0f"
-		val f = mcPlayerService.getMcPlayer(x)
+    var uuid = "81a45dc0-57ad-43e9-972b-42d39f852d0f"
+		val f = mcPlayerService.getMcPlayer(uuid)
 
 		log.info("Created suggestion with ID: ${f?.rang}!!!!")
     log.info("Created suggestion with ID: ${f?.rang}!!!!")

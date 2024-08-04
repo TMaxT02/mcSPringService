@@ -2,6 +2,8 @@ package hello.controller
 
 import hello.classen.dto.McPlayerDTO
 import hello.classen.entity.McPlayerEntity
+import hello.logic.BuildRealmAllowedService
+import hello.logic.HomeService
 import hello.logic.McPlayerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -11,14 +13,16 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/players")
 class McPlayerController(
-  @Autowired private val mcPlayerService: McPlayerService
+  @Autowired private val mcPlayerService: McPlayerService,
+  @Autowired private val homeService: HomeService,
+  @Autowired private val buildRealmAllowedService: BuildRealmAllowedService
 ) {
 
   @GetMapping("/{uuid}")
   fun getPlayer(@PathVariable uuid: String): ResponseEntity<McPlayerDTO> {
-    val player = mcPlayerService.getMcPlayer(uuid)
-    return if (player != null) {
-      ResponseEntity.ok(player)
+    val playerDTO = mcPlayerService.getMcPlayer(uuid)
+    return if (playerDTO != null) {
+      ResponseEntity.ok(playerDTO)
     } else {
       ResponseEntity.notFound().build()
     }
@@ -27,7 +31,7 @@ class McPlayerController(
   @PostMapping
   fun createPlayer(@RequestBody dto: McPlayerDTO): ResponseEntity<McPlayerDTO> {
     val playerEntity = McPlayerEntity(
-      uuid = dto.uuid,
+      playerUUID = dto.playerUUID,
       rang = dto.rang,
       geld = dto.geld
     )
@@ -35,14 +39,9 @@ class McPlayerController(
     return ResponseEntity.status(HttpStatus.CREATED).body(createdPlayer.toDTO())
   }
 
-  @PutMapping("/{uuid}")
-  fun updatePlayer(@PathVariable uuid: String, @RequestBody dto: McPlayerDTO): ResponseEntity<McPlayerDTO> {
-    val playerEntity = McPlayerEntity(
-      uuid = dto.uuid,
-      rang = dto.rang,
-      geld = dto.geld
-    )
-    val updatedPlayer = mcPlayerService.updateMcPlayer(uuid, playerEntity)
+  @PutMapping("/{playerId}")
+  fun updatePlayer(@PathVariable playerId: String, @RequestBody updatedPlayerDTO: McPlayerDTO): ResponseEntity<McPlayerDTO> {
+    val updatedPlayer = mcPlayerService.updateMcPlayer(playerId, updatedPlayerDTO)
     return if (updatedPlayer != null) {
       ResponseEntity.ok(updatedPlayer)
     } else {

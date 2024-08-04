@@ -1,6 +1,8 @@
 package hello.logic
 
 import hello.classen.dto.McPlayerDTO
+import hello.classen.entity.BuildRealmAllowedEntity
+import hello.classen.entity.HomeEntity
 import hello.classen.entity.McPlayerEntity
 import hello.reposotorys.BuildRealmAllowedRepository
 import hello.reposotorys.HomeRepository
@@ -20,11 +22,11 @@ class McPlayerService(
     val mcPlayer = mcPlayerRepository.findById(playerId).orElse(null) ?: return null
 
     val homes = homeRepository.findAll()
-      .filter { it.player == playerId }
+      .filter { it.playerUUID == playerId }
       .map { it.toDTO() }
 
     val buildRealmAllowedList = buildRealmAllowedRepository.findAll()
-      .filter { it.ownerUUID == playerId || it.otherPlayerUUID == playerId }
+      .filter { it.playerUUID == playerId }
       .map { it.toDTO() }
 
     return mcPlayer.toDTO(homes, buildRealmAllowedList)
@@ -34,16 +36,54 @@ class McPlayerService(
     return mcPlayerRepository.save(player)
   }
 
-  fun updateMcPlayer(playerId: String, updatedPlayer: McPlayerEntity): McPlayerDTO? {
-    return if (mcPlayerRepository.existsById(playerId)) {
-      updatedPlayer.uuid = playerId
-      mcPlayerRepository.save(updatedPlayer).toDTO(
-        homeRepository.findAll().filter { it.player == playerId }.map { it.toDTO() },
-        buildRealmAllowedRepository.findAll().filter { it.ownerUUID == playerId || it.otherPlayerUUID == playerId }.map { it.toDTO() }
-      )
-    } else {
-      null
+  fun updateMcPlayer(playerId: String, updatedPlayerDTO: McPlayerDTO): McPlayerDTO? {
+    if (!mcPlayerRepository.existsById(playerId)) {
+      return null
     }
+
+    val existingPlayer = mcPlayerRepository.findById(playerId).orElseThrow()
+    existingPlayer.rang = updatedPlayerDTO.rang
+    existingPlayer.geld = updatedPlayerDTO.geld
+    mcPlayerRepository.save(existingPlayer)
+
+    updatedPlayerDTO.homes?.forEach { dtoHome ->
+      val existingHome = homeRepository.findById(dtoHome.homeid.toLong()).orElse(null)
+      if (existingHome != null) {
+        existingHome.playerUUID = dtoHome.playerUUID
+        existingHome.name = dtoHome.name
+        existingHome.locationString = dtoHome.locationString
+        homeRepository.save(existingHome)
+      } else {
+        val newHome = HomeEntity(
+          homeid = dtoHome.homeid,
+          playerUUID = dtoHome.playerUUID,
+          name = dtoHome.name,
+          locationString = dtoHome.locationString
+        )
+        homeRepository.save(newHome)
+      }
+    }
+
+    updatedPlayerDTO.buildRealmAllowedList?.forEach { dtoBuildRealmAllowed ->
+      val existingBuildRealmAllowed = buildRealmAllowedRepository.findById(dtoBuildRealmAllowed.buildRealmAllowedID.toLong()).orElse(null)
+      if (existingBuildRealmAllowed != null) {
+        existingBuildRealmAllowed.playerUUID = dtoBuildRealmAllowed.playerUUID
+        existingBuildRealmAllowed.otherPlayerUUID = dtoBuildRealmAllowed.otherPlayerUUID
+        buildRealmAllowedRepository.save(existingBuildRealmAllowed)
+      } else {
+        val newBuildRealmAllowed = BuildRealmAllowedEntity(
+          buildRealmAllowedID = dtoBuildRealmAllowed.buildRealmAllowedID,
+          playerUUID = dtoBuildRealmAllowed.playerUUID,
+          otherPlayerUUID = dtoBuildRealmAllowed.otherPlayerUUID
+        )
+        buildRealmAllowedRepository.save(newBuildRealmAllowed)
+      }
+    }
+
+    return existingPlayer.toDTO(
+      homeRepository.findAll().filter { it.playerUUID == playerId }.map { it.toDTO() },
+      buildRealmAllowedRepository.findAll().filter { it.playerUUID == playerId || it.otherPlayerUUID == playerId }.map { it.toDTO() }
+    )
   }
 
   fun deleteMcPlayer(playerId: String) {

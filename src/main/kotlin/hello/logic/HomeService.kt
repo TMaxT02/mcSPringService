@@ -9,28 +9,18 @@ import org.springframework.stereotype.Service
 
 @Service
 class HomeService(
-  @Autowired private val homeRepository: HomeRepository
+  private val homeRepository: HomeRepository
 ) {
 
   fun createHome(dto: HomeDTO): HomeDTO {
+    println("Creating home with DTO: $dto")
+
     val home = dto.toEntity()
-    homeRepository.save(home)
-    return home.toDTO()
-  }
+    println("Converted to entity: $home")
 
-  fun getHome(homeid: String): HomeDTO? {
-    return homeRepository.findById(homeid).orElse(null)?.toDTO()
-  }
+    val savedHome = homeRepository.save(home)
+    println("Saved home: $savedHome")
 
-  fun updateHome(homeid: String, dto: HomeDTO): HomeDTO? {
-    val home = homeRepository.findById(homeid).orElse(null) ?: return null
-    home.name = dto.name
-    home.locationString = dto.locationString
-    homeRepository.save(home)
-    return home.toDTO()
-  }
-
-  fun deleteHome(homeid: String) {
-    homeRepository.findById(homeid).ifPresent { homeRepository.delete(it) }
+    return savedHome.toDTO()
   }
 }
