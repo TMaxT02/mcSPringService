@@ -1,6 +1,6 @@
 package hello.logic
 
-import hello.classen.dto.McPlayerDTO
+import hello.classen.dto.*
 import hello.classen.entity.BuildRealmAllowedEntity
 import hello.classen.entity.HomeEntity
 import hello.classen.entity.McPlayerEntity
@@ -29,7 +29,10 @@ class McPlayerService(
       .filter { it.playerUUID == playerId }
       .map { it.toDTO() }
 
-    return mcPlayer.toDTO(homes, buildRealmAllowedList)
+    return mcPlayer.toDTO(
+      homeManager = HomeManager(homes),
+      buildRealmManager = BuildRealmManager(buildRealmAllowedList)
+    )
   }
 
   fun saveMcPlayer(player: McPlayerEntity): McPlayerEntity {
@@ -46,7 +49,7 @@ class McPlayerService(
     existingPlayer.geld = updatedPlayerDTO.geld
     mcPlayerRepository.save(existingPlayer)
 
-    updatedPlayerDTO.homes?.forEach { dtoHome ->
+    updatedPlayerDTO.homeManager.homes?.forEach { dtoHome ->
       val existingHome = homeRepository.findById(dtoHome.homeid.toLong()).orElse(null)
       if (existingHome != null) {
         existingHome.playerUUID = dtoHome.playerUUID
@@ -64,7 +67,7 @@ class McPlayerService(
       }
     }
 
-    updatedPlayerDTO.buildRealmAllowedList?.forEach { dtoBuildRealmAllowed ->
+    updatedPlayerDTO.buildRealmManager.buildRealmAllowedList?.forEach { dtoBuildRealmAllowed ->
       val existingBuildRealmAllowed = buildRealmAllowedRepository.findById(dtoBuildRealmAllowed.buildRealmAllowedID.toLong()).orElse(null)
       if (existingBuildRealmAllowed != null) {
         existingBuildRealmAllowed.playerUUID = dtoBuildRealmAllowed.playerUUID
@@ -81,8 +84,12 @@ class McPlayerService(
     }
 
     return existingPlayer.toDTO(
-      homeRepository.findAll().filter { it.playerUUID == playerId }.map { it.toDTO() },
-      buildRealmAllowedRepository.findAll().filter { it.playerUUID == playerId || it.otherPlayerUUID == playerId }.map { it.toDTO() }
+      homeManager = HomeManager(
+        homeRepository.findAll().filter { it.playerUUID == playerId }.map { it.toDTO() }
+      ),
+      buildRealmManager = BuildRealmManager(
+        buildRealmAllowedRepository.findAll().filter { it.playerUUID == playerId || it.otherPlayerUUID == playerId }.map { it.toDTO() }
+      )
     )
   }
 

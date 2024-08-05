@@ -1,9 +1,7 @@
 package hello.classen.entity
 
 import hello.classen.Rang
-import hello.classen.dto.BuildRealmAllowedDTO
-import hello.classen.dto.HomeDTO
-import hello.classen.dto.McPlayerDTO
+import hello.classen.dto.*
 import jakarta.persistence.*
 import jakarta.persistence.EnumType.STRING
 
@@ -21,13 +19,13 @@ data class McPlayerEntity(
   @Column(name = "geld", nullable = false)
   var geld: Int
 ) {
-  fun toDTO(homes: List<HomeDTO>?=null, buildRealmAllowedList: List<BuildRealmAllowedDTO>?=null): McPlayerDTO {
+  fun toDTO(homeManager: HomeManager? = null, buildRealmManager: BuildRealmManager? = null): McPlayerDTO {
     return McPlayerDTO(
       playerUUID = this.playerUUID,
       rang = this.rang,
       geld = this.geld,
-      homes = homes,
-      buildRealmAllowedList = buildRealmAllowedList
+      homeManager = homeManager ?: HomeManager(null),
+      buildRealmManager = buildRealmManager ?: BuildRealmManager(null)
     )
   }
 }

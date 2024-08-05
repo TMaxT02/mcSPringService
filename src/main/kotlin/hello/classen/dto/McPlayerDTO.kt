@@ -6,7 +6,6 @@ data class McPlayerDTO(
   val playerUUID: String,
   val rang: Rang,
   val geld: Int,
-  val homes: List<HomeDTO>?,
-  val buildRealmAllowedList: List<BuildRealmAllowedDTO>?
+  val homeManager: HomeManager,
+  val buildRealmManager: BuildRealmManager
 )
-//

@@ -2,6 +2,8 @@ package hello
 
 import hello.classen.dto.BuildRealmAllowedDTO
 import hello.classen.dto.HomeDTO
+import hello.classen.dto.HomeManager
+import hello.classen.dto.BuildRealmManager
 import hello.classen.entity.McPlayerEntity
 import hello.classen.Rang
 import hello.logic.BuildRealmAllowedService
@@ -17,7 +19,6 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.web.context.WebApplicationContext
@@ -78,20 +79,20 @@ class McPlayerControllerTest(
       .andExpect(jsonPath("$.playerUUID").value("player1-uuid"))
       .andExpect(jsonPath("$.rang").value("Admin"))
       .andExpect(jsonPath("$.geld").value(1200))
-      .andExpect(jsonPath("$.homes[0].homeid").value(1))
-      .andExpect(jsonPath("$.homes[0].playerUUID").value("player1-uuid"))
-      .andExpect(jsonPath("$.homes[0].name").value("player1home1"))
-      .andExpect(jsonPath("$.homes[0].locationString").value("player1loc1"))
-      .andExpect(jsonPath("$.homes[1].homeid").value(2))
-      .andExpect(jsonPath("$.homes[1].playerUUID").value("player1-uuid"))
-      .andExpect(jsonPath("$.homes[1].name").value("player1home2"))
-      .andExpect(jsonPath("$.homes[1].locationString").value("player1loc2"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].buildRealmAllowedID").value(1))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].playerUUID").value("player1-uuid"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].otherPlayerUUID").value("o1"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].buildRealmAllowedID").value(2))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].playerUUID").value("player1-uuid"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].otherPlayerUUID").value("o2"))
+      .andExpect(jsonPath("$.homeManager.homes[0].homeid").value(1))
+      .andExpect(jsonPath("$.homeManager.homes[0].playerUUID").value("player1-uuid"))
+      .andExpect(jsonPath("$.homeManager.homes[0].name").value("player1home1"))
+      .andExpect(jsonPath("$.homeManager.homes[0].locationString").value("player1loc1"))
+      .andExpect(jsonPath("$.homeManager.homes[1].homeid").value(2))
+      .andExpect(jsonPath("$.homeManager.homes[1].playerUUID").value("player1-uuid"))
+      .andExpect(jsonPath("$.homeManager.homes[1].name").value("player1home2"))
+      .andExpect(jsonPath("$.homeManager.homes[1].locationString").value("player1loc2"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].buildRealmAllowedID").value(1))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].playerUUID").value("player1-uuid"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].otherPlayerUUID").value("o1"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].buildRealmAllowedID").value(2))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].playerUUID").value("player1-uuid"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].otherPlayerUUID").value("o2"))
   }
 
   @Test
@@ -108,20 +109,20 @@ class McPlayerControllerTest(
       .andExpect(jsonPath("$.playerUUID").value("player2-uuid"))
       .andExpect(jsonPath("$.rang").value("Star"))
       .andExpect(jsonPath("$.geld").value(100))
-      .andExpect(jsonPath("$.homes[0].homeid").value(3))
-      .andExpect(jsonPath("$.homes[0].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.homes[0].name").value("player2home1"))
-      .andExpect(jsonPath("$.homes[0].locationString").value("player2loc1"))
-      .andExpect(jsonPath("$.homes[1].homeid").value(4))
-      .andExpect(jsonPath("$.homes[1].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.homes[1].name").value("player2home2"))
-      .andExpect(jsonPath("$.homes[1].locationString").value("player2loc2"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].buildRealmAllowedID").value(3))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].otherPlayerUUID").value("03"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].buildRealmAllowedID").value(4))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].otherPlayerUUID").value("04"))
+      .andExpect(jsonPath("$.homeManager.homes[0].homeid").value(3))
+      .andExpect(jsonPath("$.homeManager.homes[0].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.homeManager.homes[0].name").value("player2home1"))
+      .andExpect(jsonPath("$.homeManager.homes[0].locationString").value("player2loc1"))
+      .andExpect(jsonPath("$.homeManager.homes[1].homeid").value(4))
+      .andExpect(jsonPath("$.homeManager.homes[1].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.homeManager.homes[1].name").value("player2home2"))
+      .andExpect(jsonPath("$.homeManager.homes[1].locationString").value("player2loc2"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].buildRealmAllowedID").value(3))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].otherPlayerUUID").value("03"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].buildRealmAllowedID").value(4))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].otherPlayerUUID").value("04"))
   }
 
   @Test
@@ -130,21 +131,25 @@ class McPlayerControllerTest(
         "playerUUID": "new-player-uuid",
         "rang": "Builder",
         "geld": 600,
-        "homes": [],
-        "buildRealmAllowedList": []
+        "homeManager": {
+          "homes": []
+        },
+        "buildRealmManager": {
+          "buildRealmAllowedList": []
+        }
     }"""
 
     mockMvc.perform(
-      post("/players")
+      MockMvcRequestBuilders.post("/players")
         .contentType(MediaType.APPLICATION_JSON)
         .content(requestJson)
     )
-      .andExpect(status().isCreated) // Changed to isCreated
+      .andExpect(status().isCreated)
       .andExpect(jsonPath("$.playerUUID").value("new-player-uuid"))
       .andExpect(jsonPath("$.rang").value("Builder"))
       .andExpect(jsonPath("$.geld").value(600))
-      .andExpect(jsonPath("$.homes").isEmpty)
-      .andExpect(jsonPath("$.buildRealmAllowedList").isEmpty)
+      .andExpect(jsonPath("$.homeManager.homes").isEmpty)
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList").isEmpty)
   }
 
   @Test
@@ -154,7 +159,8 @@ class McPlayerControllerTest(
         "playerUUID": "player2-uuid",
         "rang": "Admin",
         "geld": 1200,
-        "homes": [
+        "homeManager": {
+          "homes": [
             {
                 "homeid": 3,
                 "playerUUID": "player2-uuid",
@@ -167,19 +173,22 @@ class McPlayerControllerTest(
                 "name": "player2home2",
                 "locationString": "player2loc2"
             }
-        ],
-        "buildRealmAllowedList": [
+          ]
+        },
+        "buildRealmManager": {
+          "buildRealmAllowedList": [
             {
-                "buildRealmAllowedID": 1,
+                "buildRealmAllowedID": 3,
                 "playerUUID": "player2-uuid",
                 "otherPlayerUUID": "03"
             },
             {
-                "buildRealmAllowedID": 2,
+                "buildRealmAllowedID": 4,
                 "playerUUID": "player2-uuid",
                 "otherPlayerUUID": "04"
             }
-        ]
+          ]
+        }
     }"""
 
     mockMvc.perform(
@@ -192,20 +201,20 @@ class McPlayerControllerTest(
       .andExpect(jsonPath("$.playerUUID").value("player2-uuid"))
       .andExpect(jsonPath("$.rang").value("Admin"))
       .andExpect(jsonPath("$.geld").value(1200))
-      .andExpect(jsonPath("$.homes[0].homeid").value(3))
-      .andExpect(jsonPath("$.homes[0].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.homes[0].name").value("player2home1"))
-      .andExpect(jsonPath("$.homes[0].locationString").value("player2loc1"))
-      .andExpect(jsonPath("$.homes[1].homeid").value(4))
-      .andExpect(jsonPath("$.homes[1].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.homes[1].name").value("player2home2"))
-      .andExpect(jsonPath("$.homes[1].locationString").value("player2loc2"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].buildRealmAllowedID").value(1))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[0].otherPlayerUUID").value("03"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].buildRealmAllowedID").value(2))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].playerUUID").value("player2-uuid"))
-      .andExpect(jsonPath("$.buildRealmAllowedList[1].otherPlayerUUID").value("04"))
+      .andExpect(jsonPath("$.homeManager.homes[0].homeid").value(3))
+      .andExpect(jsonPath("$.homeManager.homes[0].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.homeManager.homes[0].name").value("player2home1"))
+      .andExpect(jsonPath("$.homeManager.homes[0].locationString").value("player2loc1"))
+      .andExpect(jsonPath("$.homeManager.homes[1].homeid").value(4))
+      .andExpect(jsonPath("$.homeManager.homes[1].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.homeManager.homes[1].name").value("player2home2"))
+      .andExpect(jsonPath("$.homeManager.homes[1].locationString").value("player2loc2"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].buildRealmAllowedID").value(3))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[0].otherPlayerUUID").value("03"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].buildRealmAllowedID").value(4))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].playerUUID").value("player2-uuid"))
+      .andExpect(jsonPath("$.buildRealmManager.buildRealmAllowedList[1].otherPlayerUUID").value("04"))
   }
 
   @Test
