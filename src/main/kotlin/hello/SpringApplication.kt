@@ -30,7 +30,6 @@ class SpringApplication(private val mcPlayerService: McPlayerService) {
     log.info("Created suggestion with ID: ${f?.rang}!!!!")
     log.info("Created suggestion with ID: ${f?.rang}!!!!")
     log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
 	}
 }
 fun main() {
