@@ -17,6 +17,12 @@ class PluginTemplate : JavaPlugin() {
         Bukkit.getServer().consoleSender.sendMessage("§6Server AKTIV")
         Bukkit.getServer().consoleSender.sendMessage("§6Server AKTIV")
         Bukkit.getServer().consoleSender.sendMessage("§6Server AKTIV 2024!!!!XD")
+
+        // Setze den ClassLoader auf den des Plugins
+        Thread.currentThread().contextClassLoader = this.javaClass.classLoader
+
+        // Starte die Spring Boot Anwendung
+        runApplication<SpringApplication>()
         runApplication<SpringApplication>()
     }//
 }
