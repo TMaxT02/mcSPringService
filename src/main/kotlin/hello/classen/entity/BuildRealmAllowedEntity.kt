@@ -11,10 +11,10 @@ data class BuildRealmAllowedEntity(
   @Column(name = "id")
   val buildRealmAllowedID: Int,
 
-  @Column(name = "ownerUUID")
+  @Column(name = "uuid")
   var playerUUID: String,
 
-  @Column(name = "otherPlayerUUID")
+  @Column(name = "otherplayeruuid")
   var otherPlayerUUID: String,
 ) {
   fun toDTO(): BuildRealmAllowedDTO {
