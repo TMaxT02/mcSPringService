@@ -18,5 +18,5 @@ class PluginTemplate : JavaPlugin() {
         Bukkit.getServer().consoleSender.sendMessage("§6Server AKTIV")
         Bukkit.getServer().consoleSender.sendMessage("§6Server AKTIV 2024!!!!XD")
         runApplication<SpringApplication>()
-    }
+    }//
 }
