@@ -5,6 +5,7 @@ plugins {
   kotlin("jvm") version kotlinVersion
   kotlin("plugin.spring") version kotlinVersion
   kotlin("plugin.jpa") version kotlinVersion
+  id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "mc.plugin"
@@ -38,32 +39,31 @@ kotlin {
 tasks.withType<Test> {
   useJUnitPlatform()
 }
-//tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-//  archiveVersion.set("paperspring")
-//}
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
+  archiveVersion.set("paperspring")
+}
 
-//tasks.register<Jar>("combineJars") {
-//  dependsOn("bootJar", "shadowJar")
-//  from(zipTree(tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar").get().archiveFile.get().asFile)) {
-//      exclude("gg/**","gg/flyte/template/PluginTemplate.kt","gg/flyte/template/**")
-//  }
-//  from(zipTree(tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar").get().archiveFile.get().asFile)) {
-//    // Optional: exclude duplicate files if necessary
-//    exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA","hello/**")
-//  }
-//  archiveClassifier.set("combined")
-//}
+tasks.register<Jar>("combineJars") {
+  dependsOn("bootJar", "shadowJar")
+  from(zipTree(tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar").get().archiveFile.get().asFile)) {
+      exclude("gg/**","gg/flyte/template/PluginTemplate.kt","gg/flyte/template/**")
+  }
+  from(zipTree(tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar").get().archiveFile.get().asFile)) {
+    // Optional: exclude duplicate files if necessary
+    exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA","hello/**")
+  }
+  archiveClassifier.set("combined")
+}
 
-//tasks.register("buildCombined") {
-//  dependsOn("combineJars")
-//}
+tasks.register("buildCombined") {
+  dependsOn("combineJars")
+}
 
-//tasks.processResources {
-//  val props = mapOf("version" to version)
-//  inputs.properties(props)
-//  filteringCharset = "UTF-8"
-//  filesMatching("paper-plugin.yml") {
-//    expand(props)
-//  }
-//}
-//
+tasks.processResources {
+  val props = mapOf("version" to version)
+  inputs.properties(props)
+  filteringCharset = "UTF-8"
+  filesMatching("paper-plugin.yml") {
+    expand(props)
+  }
+}
