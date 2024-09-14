@@ -22,14 +22,22 @@ repositories {
 }
 
 dependencies {
+    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.ktor:ktor-serialization-jackson:2.3.0")
     implementation("com.h2database:h2")
     implementation("mysql:mysql-connector-java:8.0.33")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("org.json:json:20210307")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    implementation("org.slf4j:slf4j-simple:2.0.0-alpha7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("io.ktor:ktor-client-cio:2.3.0")
 }
 
 val targetJavaVersion = 17

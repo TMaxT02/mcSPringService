@@ -1,6 +1,6 @@
 name: Paper-Kotlin-Template
 version: 1.0.0
-main: hello.PluginTemplate
+main: hello.minecraft.PluginTemplate
 api-version: '1.20'
 authors: [ The Flyte Team ]
 description: Paper Plugin Template written in Kotlin.

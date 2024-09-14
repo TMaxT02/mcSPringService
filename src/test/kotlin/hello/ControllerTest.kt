@@ -1,14 +1,14 @@
 package hello
 
-import hello.classen.dto.BuildRealmAllowedDTO
-import hello.classen.dto.HomeDTO
-import hello.classen.dto.HomeManager
-import hello.classen.dto.BuildRealmManager
-import hello.classen.entity.McPlayerEntity
-import hello.classen.Rang
-import hello.logic.BuildRealmAllowedService
-import hello.logic.HomeService
-import hello.logic.McPlayerService
+import hello.spring.classen.dto.BuildRealmAllowedDTO
+import hello.spring.classen.dto.HomeDTO
+import hello.spring.classen.dto.HomeManager
+import hello.spring.classen.dto.BuildRealmManager
+import hello.spring.classen.entity.McPlayerEntity
+import hello.spring.classen.Rang
+import hello.spring.logic.BuildRealmAllowedService
+import hello.spring.logic.HomeService
+import hello.spring.logic.McPlayerService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
