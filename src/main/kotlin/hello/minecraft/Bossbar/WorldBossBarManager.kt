@@ -1,6 +1,6 @@
 package hello.minecraft.Bossbar
 
-import hello.minecraft.PluginTemplate
+import hello.PluginTemplate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

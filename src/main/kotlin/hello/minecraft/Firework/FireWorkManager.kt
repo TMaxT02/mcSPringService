@@ -1,7 +1,7 @@
 package hello.minecraft.Firework
 
+import hello.PluginTemplate.Companion.instance
 import hello.minecraft.AllLocation
-import hello.minecraft.PluginTemplate.Companion.instance
 import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.bukkit.FireworkEffect

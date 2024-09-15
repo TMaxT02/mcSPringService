@@ -1,6 +1,6 @@
 package hello.minecraft.World.FarmWorld
 
-import hello.minecraft.PluginTemplate.Companion.instance
+import hello.PluginTemplate.Companion.instance
 import hello.minecraft.World.FarmWorld.FarmWorldManager.objects.cooldowns
 import org.bukkit.Bukkit
 import org.bukkit.Chunk

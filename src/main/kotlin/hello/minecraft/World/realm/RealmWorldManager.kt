@@ -1,7 +1,7 @@
 package hello.minecraft.World.realm
 
+import hello.PluginTemplate
 import hello.minecraft.AllLocation.islandTemplate
-import hello.minecraft.PluginTemplate
 import kotlinx.coroutines.*
 import org.bukkit.*
 import org.bukkit.entity.Player

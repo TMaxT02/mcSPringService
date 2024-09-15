@@ -1,6 +1,6 @@
 package hello.minecraft.World.realm.commands
 
-import hello.minecraft.PluginTemplate
+import hello.PluginTemplate
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender

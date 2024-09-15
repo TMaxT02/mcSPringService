@@ -1,9 +1,9 @@
 package hello.minecraft.Tablist
+import hello.PluginTemplate
+import hello.PluginTemplate.Companion.instance
 import hello.minecraft.DefaultPlayer
-import hello.minecraft.PluginTemplate.Companion.instance
 import hello.minecraft.Classes.Rang
 import hello.minecraft.Player.PlayerManager
-import hello.minecraft.PluginTemplate
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.scoreboard.Team

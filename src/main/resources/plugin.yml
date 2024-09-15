@@ -5,3 +5,17 @@ api-version: '1.20'
 authors: [ The Flyte Team ]
 description: Paper Plugin Template written in Kotlin.
 website: https://flyte.gg
+commands:
+  rank:
+  spawn:
+  repair:
+  money:
+  pay:
+  home:
+  realm:
+  build:
+  adminmenu:
+  click:
+  remove:
+  realms:
+  org:

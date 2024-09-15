@@ -1,6 +1,6 @@
 package hello.minecraft.World.FarmWorld
 
-import hello.minecraft.PluginTemplate.Companion.instance
+import hello.PluginTemplate.Companion.instance
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material

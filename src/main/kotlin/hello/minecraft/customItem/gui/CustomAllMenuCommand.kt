@@ -1,6 +1,6 @@
 package hello.minecraft.customItem.gui
 
-import hello.minecraft.PluginTemplate
+import hello.PluginTemplate
 import kotlinx.coroutines.*
 import org.bukkit.Material
 import org.bukkit.command.Command
