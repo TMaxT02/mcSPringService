@@ -67,7 +67,7 @@ class PluginTemplate : JavaPlugin() {
 
     override fun onEnable() {
         //  CoroutineScope(Dispatchers.IO).launch {
-        startSpringBootApp()
+
         //   }
 
         instance = this
@@ -155,14 +155,5 @@ class PluginTemplate : JavaPlugin() {
     private fun removeEntityOnSpawn() {
         val spawn = Bukkit.getWorld("world")
         spawn?.entities?.filter { it.type == EntityType.ARMOR_STAND }?.forEach { it.remove() }
-    }
-
-    private fun startSpringBootApp() {
-        // Setze den ClassLoader auf den des Plugins
-        Thread.currentThread().contextClassLoader = this.javaClass.classLoader
-
-
-        runApplication<SpringApplication>()
-
     }
 }

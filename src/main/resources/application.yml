@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost/s28761_My-Realm
-    username: u28761_ApgYW40ae3
-    password: BPCjRlc68RKnc1y1zyWE6G2M
+    url: jdbc:mysql://localhost/test
+    username: root
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
