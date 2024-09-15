@@ -66,9 +66,7 @@ class PluginTemplate : JavaPlugin() {
     }
 
     override fun onEnable() {
-        CoroutineScope(Dispatchers.IO).launch {
-            startSpringBootApp()
-        }
+
 
         instance = this
         tabListManager = TabListManager()
@@ -114,16 +112,6 @@ class PluginTemplate : JavaPlugin() {
 
 
         registerEvent(CostumPlaceListener(instance))
-
-        getBlockStrength(Material.BARRIER)
-
-        // Setze den ClassLoader auf den des Plugins
- ////   Thread.currentThread().contextClassLoader = this.javaClass.classLoader
-
- //   // Starte die Spring Boot Anwendung
- //   runApplication<SpringApplication>()
- //   runApplication<SpringApplication>()
-
     }
 
     override fun onDisable() {
@@ -149,31 +137,5 @@ class PluginTemplate : JavaPlugin() {
     private fun removeEntityOnSpawn() {
         val spawn = Bukkit.getWorld("world")
         spawn?.entities?.filter { it.type == EntityType.ARMOR_STAND }?.forEach { it.remove() }
-    }
-
-    fun getBlockStrength(block: Any) {
-        Bukkit.getServer().consoleSender.sendMessage("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        Bukkit.getServer().consoleSender.sendMessage(block.javaClass.fields.joinToString { it.name })
-        Bukkit.getServer().consoleSender.sendMessage("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-
-    }
-
-    fun startSpringBootApp() {
-        // Verzeichnis des Minecraft-Plugins
-        val pluginDirectory = File("plugins") // Ersetze "plugins" falls notwendig
-
-        // Pfad zur JAR-Datei
-        val jarPath = File(pluginDirectory, "paperspring.jar").absolutePath
-
-        // Lade die JAR-Datei
-        val url = File(jarPath).toURI().toURL()
-        val classLoader = URLClassLoader(arrayOf(url), this::class.java.classLoader)
-
-        // Lade die SpringApplication-Klasse
-        val springApplicationClass = classLoader.loadClass("hello.SpringApplication") // Ersetze mit dem vollständigen Klassennamen
-
-        // Starte die Spring Boot-Anwendung
-        val mainMethod = springApplicationClass.getMethod("main", Array<String>::class.java)
-        mainMethod.invoke(null, arrayOf<String>()) // Optionale Argumente hinzufügen
     }
 }
