@@ -22,6 +22,10 @@ repositories {
 }
 
 dependencies {
+    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -29,7 +33,15 @@ dependencies {
     implementation("com.h2database:h2")
     implementation("mysql:mysql-connector-java:8.0.33")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    //compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+
+    //hhtp
+    implementation("io.ktor:ktor-client-core:2.3.0")
+    implementation("io.ktor:ktor-client-cio:2.3.0")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.0")
+    implementation("io.ktor:ktor-serialization-jackson:2.3.0")
 }
 
 val targetJavaVersion = 21
@@ -60,7 +72,7 @@ tasks.register<Jar>("combineJars") {
         )
     ) {
         // Optional: exclude duplicate files if necessary
-        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA", "hello/**")
+        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA", "hello/**","gg/**")
     }
     archiveClassifier.set("combined")
 }
