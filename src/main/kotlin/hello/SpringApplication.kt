@@ -8,32 +8,20 @@ import org.springframework.boot.runApplication
 import javax.sql.DataSource
 
 @SpringBootApplication
-class SpringApplication(private val mcPlayerService: McPlayerService,private val dataSource: DataSource) {
+class SpringApplication(private val mcPlayerService: McPlayerService, private val dataSource: DataSource) {
 
-	private val log = LoggerFactory.getLogger(SpringApplication::class.java)
+    private val log = LoggerFactory.getLogger(SpringApplication::class.java)
 
-	@PostConstruct
-	fun init() {
-    val uuid = "1234"
-		val f = mcPlayerService.getMcPlayer(uuid)
+    @PostConstruct
+    fun init() {
+        val uuid = "1234"
+        val f = mcPlayerService.getMcPlayer(uuid)
 
-		log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
-    log.info("Created suggestion with ID: ${f?.rang}!!!!")
+        log.info("${f?.rang}")
+        log.info("Created suggestion with ID: ${f?.rang}!!!!")
         checkDatabaseConnection()
-
     }
+
     private fun checkDatabaseConnection() {
         try {
             val connection = dataSource.connection
@@ -53,6 +41,7 @@ class SpringApplication(private val mcPlayerService: McPlayerService,private val
         }
     }
 }
+
 fun main() {
-	runApplication<SpringApplication>()
+    runApplication<SpringApplication>()
 }
